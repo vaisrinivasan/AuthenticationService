@@ -1,0 +1,24 @@
+Requirements:
+1. Create a user account
+2. Look-up a user
+3. Authenticate a user via password
+
+Create a user account
+POST
+mandatory : username, email, password
+-> username / email / password already exists, return 4xx status
+-> create a user uuid, then store the above.
+    -> password storing should be specially handled
+-> Return a token.
+
+Authenticate a user via password
+GET
+mandatory : username, password
+-> username / password does not exist, return 4xx status
+-> Return a token.
+
+Look-up a user
+GET
+mandatory : token
+-> if token not valid / token expired, return 4xx status
+-> Return user details

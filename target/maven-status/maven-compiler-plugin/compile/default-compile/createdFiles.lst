@@ -1,0 +1,9 @@
+com\org\authservice\dao\SampleDao.class
+com\org\authservice\AuthServiceApplication.class
+com\org\authservice\dao\SampleMapper.class
+com\org\authservice\models\SampleEntry.class
+com\org\authservice\api\Saying.class
+com\org\authservice\service\SampleService.class
+com\org\authservice\resources\AuthServiceResource.class
+com\org\authservice\health\TemplateHealthCheck.class
+com\org\authservice\AuthServiceConfiguration.class
