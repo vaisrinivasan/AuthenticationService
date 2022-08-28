@@ -17,4 +17,8 @@ public interface UserDao {
 
     @SqlUpdate("insert into users values(:id, :username, :email, crypt(:password, gen_salt('bf',8)))")
     public int createUser(@BindBean User user);
+
+    @SqlQuery("select * from users where username = :username and password = crypt(:password, password)")
+    public User getRegisteredUser(@Bind("username") final String username,
+                                  @Bind("password") final String password);
 }

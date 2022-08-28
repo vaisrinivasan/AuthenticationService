@@ -16,9 +16,14 @@ public class UserService {
         return user != null;
     }
 
-    public Optional<UUID> createUser(String email, String username, String password) {
-        final UUID userId = UUID.randomUUID();
-        int isCreated = userDao.createUser(new User(userId.toString(), email, username, password));
+    public Optional<String> createUser(String email, String username, String password) {
+        final String userId = UUID.randomUUID().toString();
+        int isCreated = userDao.createUser(new User(userId, email, username, password));
         return isCreated != -1 ? Optional.of(userId) : Optional.empty();
+    }
+
+    public Optional<User> getRegisteredUser(String username, String password) {
+        User user = userDao.getRegisteredUser(username, password);
+        return user == null ? Optional.empty() : Optional.of(user);
     }
 }

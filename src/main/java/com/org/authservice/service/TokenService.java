@@ -20,9 +20,9 @@ public class TokenService {
         this.tokenSecret = tokenSecret;
     }
 
-    public Map<String, String> generateToken(UUID id) {
+    public Map<String, String> generateToken(String id) {
         final JwtClaims claims = new JwtClaims();
-        claims.setSubject(id.toString());
+        claims.setSubject(id);
         claims.setExpirationTimeMinutesInTheFuture(30);
         final JsonWebSignature jws = new JsonWebSignature();
         jws.setPayload(claims.toJson());
