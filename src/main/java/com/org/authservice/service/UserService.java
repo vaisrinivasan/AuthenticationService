@@ -26,4 +26,9 @@ public class UserService {
         User user = userDao.getRegisteredUser(username, password);
         return user == null ? Optional.empty() : Optional.of(user);
     }
+
+    public Optional<User> getUserById(String id) {
+        User user = userDao.getUserById(id);
+        return user == null ? Optional.empty() : Optional.of(user);
+    }
 }

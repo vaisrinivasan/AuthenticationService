@@ -1,4 +1,4 @@
-jwtTokenSecret: dfwzsdzwh823zebdwdz772632gdsbdd41l5rqt6
+jwtTokenSecret: asdfSFS34wfsdfsdfSDSD32dfsddDDerQSNCK34SOWEK5354fdgdf4
 database:
   # the name of your JDBC driver
   driverClass: org.postgresql.Driver

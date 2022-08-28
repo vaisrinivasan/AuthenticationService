@@ -1,36 +1,45 @@
 package com.org.authservice.service;
 
-import com.google.common.base.Throwables;
-import org.jose4j.jws.JsonWebSignature;
-import org.jose4j.jwt.JwtClaims;
-import org.jose4j.keys.HmacKey;
-import org.jose4j.lang.JoseException;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 
-import java.util.Map;
-import java.util.UUID;
-
-import static java.util.Collections.singletonMap;
-import static org.jose4j.jws.AlgorithmIdentifiers.HMAC_SHA256;
+import javax.crypto.spec.SecretKeySpec;
+import java.security.Key;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+import java.util.Base64;
+import java.util.Date;
 
 public class TokenService {
 
-    private final byte[] tokenSecret;
+    private final String tokenSecret;
 
-    public TokenService(byte[] tokenSecret) {
+    public TokenService(String tokenSecret) {
         this.tokenSecret = tokenSecret;
     }
 
-    public Map<String, String> generateToken(String id) {
-        final JwtClaims claims = new JwtClaims();
-        claims.setSubject(id);
-        claims.setExpirationTimeMinutesInTheFuture(30);
-        final JsonWebSignature jws = new JsonWebSignature();
-        jws.setPayload(claims.toJson());
-        jws.setAlgorithmHeaderValue(HMAC_SHA256);
-        jws.setKey(new HmacKey(tokenSecret));
-        try {
-            return singletonMap("token", jws.getCompactSerialization());
-        }
-        catch (JoseException e) { throw Throwables.propagate(e); }
+    public String generateToken(String id) {
+        final Key hmacKey = new SecretKeySpec(Base64.getDecoder().decode(tokenSecret),
+                SignatureAlgorithm.HS256.getJcaName());
+        final Instant now = Instant.now();
+        final String jwtToken = Jwts.builder()
+                .setId(id)
+                .setIssuedAt(Date.from(now))
+                .setExpiration(Date.from(now.plus(10l, ChronoUnit.MINUTES)))
+                .signWith(hmacKey)
+                .compact();
+        return jwtToken;
+    }
+
+    public Jws<Claims> parseToken(String token) {
+        final Key hmacKey = new SecretKeySpec(Base64.getDecoder().decode(tokenSecret),
+                SignatureAlgorithm.HS256.getJcaName());
+        Jws<Claims> jwt = Jwts.parserBuilder()
+                .setSigningKey(hmacKey)
+                .build()
+                .parseClaimsJws(token);
+        return jwt;
     }
 }

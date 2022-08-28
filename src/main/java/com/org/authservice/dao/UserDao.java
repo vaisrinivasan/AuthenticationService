@@ -21,4 +21,7 @@ public interface UserDao {
     @SqlQuery("select * from users where username = :username and password = crypt(:password, password)")
     public User getRegisteredUser(@Bind("username") final String username,
                                   @Bind("password") final String password);
+
+    @SqlQuery("select * from users where id = :id")
+    public User getUserById(@Bind("id") final String id);
 }

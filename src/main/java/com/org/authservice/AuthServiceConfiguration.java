@@ -28,7 +28,7 @@ public class AuthServiceConfiguration extends Configuration {
         return dataSourceFactory;
     }
 
-    public byte[] getJwtTokenSecret() throws UnsupportedEncodingException {
-        return jwtTokenSecret.getBytes("UTF-8");
+    public String getJwtTokenSecret()  {
+        return jwtTokenSecret;
     }
 }
