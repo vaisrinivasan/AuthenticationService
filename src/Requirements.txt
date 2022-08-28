@@ -22,3 +22,35 @@ GET
 mandatory : token
 -> if token not valid / token expired, return 4xx status
 -> Return user details
+
+------------------------------
+Edge cases / Exceptions:
+
+Common points:
+-> Logging to be done for all the endpoints
+-> Should the fields be query params or path params?
+-> Should throw proper http statuses for all the outcomes.
+-> Should handle the exceptions properly(In some places, I've added to method signatures vs try/catch)
+
+1. Register a user
+-> If email, username and password does not exist in db, then create the user and generate token.
+-> If email or username or password exists, throw UserAlreadyExistsException
+-> Not doing the data validation for email, password and username as it should be done on the front-end.
+-> If there's a problem in user creation, then token shouldn't be generated
+-> If there's a problem in token creation and user is already inserted in the db, what should be done?
+-> Once the user registers, there's no email sent for validation but the user is automatically logged in(as the token is returned in the response)
+
+
+2. Login
+-> If username and password match, generate token.
+-> If username and password don't match, throw UserNotRegisteredException
+-> If there's a problem in fetching user id, then token shouldn't be created
+-> If there's a problem in token creation, throw appropriate exception
+
+3. Lookup
+-> If the token is valid, return the user details except password
+-> If the token is not a JWT format, throw appropriate exception
+-> If the token is expired, throw appropriate exception
+-> If the token signature verification fails, throw appropriate exception
+-> If the token succeeds, but user is not available in db, throw appropriate exception
+-> If there's a problem in fetching user from db, throw appropriate exception

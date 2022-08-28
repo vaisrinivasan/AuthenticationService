@@ -24,4 +24,7 @@ public interface UserDao {
 
     @SqlQuery("select * from users where id = :id")
     public User getUserById(@Bind("id") final String id);
+
+    @SqlUpdate("delete from users where id = :id")
+    public int deleteUserById(@Bind("id") final String id);
 }

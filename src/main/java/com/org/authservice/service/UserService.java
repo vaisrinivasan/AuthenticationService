@@ -31,4 +31,8 @@ public class UserService {
         User user = userDao.getUserById(id);
         return user == null ? Optional.empty() : Optional.of(user);
     }
+
+    public int deleteUserById(String id) {
+        return userDao.deleteUserById(id);
+    }
 }
