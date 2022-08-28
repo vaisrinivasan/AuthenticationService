@@ -1,5 +1,4 @@
-template: Hello, %s!
-defaultName: Stranger
+jwtTokenSecret: dfwzsdzwh823zebdwdz772632gdsbdd41l5rqt6
 database:
   # the name of your JDBC driver
   driverClass: org.postgresql.Driver
@@ -11,7 +10,7 @@ database:
   password: password
 
   # the JDBC URL
-  url: jdbc:postgresql://localhost:5432/Test
+  url: jdbc:postgresql://localhost:5432/authservice
 
   # any properties specific to your JDBC driver:
   properties:
@@ -42,3 +41,4 @@ database:
   minIdleTime: 1 minute
 
   checkConnectionOnBorrow: true
+

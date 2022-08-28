@@ -7,6 +7,7 @@ import io.dropwizard.db.DataSourceFactory;
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.io.UnsupportedEncodingException;
 
 public class AuthServiceConfiguration extends Configuration {
 
@@ -15,10 +16,7 @@ public class AuthServiceConfiguration extends Configuration {
     private DataSourceFactory dataSourceFactory = new DataSourceFactory();
 
     @NotEmpty
-    private String template;
-
-    @NotEmpty
-    private String defaultName = "Stranger";
+    private String jwtTokenSecret;
 
     @JsonProperty("database")
     public void setDataSourceFactory(DataSourceFactory factory) {
@@ -30,23 +28,7 @@ public class AuthServiceConfiguration extends Configuration {
         return dataSourceFactory;
     }
 
-    @JsonProperty
-    public String getTemplate() {
-        return template;
-    }
-
-    @JsonProperty
-    public void setTemplate(String template) {
-        this.template = template;
-    }
-
-    @JsonProperty
-    public String getDefaultName() {
-        return defaultName;
-    }
-
-    @JsonProperty
-    public void setDefaultName(String name) {
-        this.defaultName = name;
+    public byte[] getJwtTokenSecret() throws UnsupportedEncodingException {
+        return jwtTokenSecret.getBytes("UTF-8");
     }
 }
