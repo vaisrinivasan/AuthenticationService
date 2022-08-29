@@ -3,11 +3,13 @@ com\org\authservice\AuthServiceApplication.class
 com\org\authservice\models\User.class
 com\org\authservice\service\UserService.class
 com\org\authservice\dao\UserDao.class
+com\org\authservice\exceptions\DependencyException.class
 com\org\authservice\exceptions\UserNotRegisteredException.class
 com\org\authservice\dao\UserMapper.class
 com\org\authservice\exceptions\InvalidUserException.class
 com\org\authservice\models\Representation.class
 com\org\authservice\resources\AuthServiceResource.class
+com\org\authservice\exceptions\InvalidInputException.class
 com\org\authservice\health\TemplateHealthCheck.class
 com\org\authservice\AuthServiceConfiguration.class
 com\org\authservice\exceptions\UserNotCreatedException.class

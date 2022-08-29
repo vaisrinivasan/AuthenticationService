@@ -10,10 +10,9 @@ import org.skife.jdbi.v2.sqlobject.customizers.RegisterMapper;
 @RegisterMapper(UserMapper.class)
 public interface UserDao {
 
-    @SqlQuery("select * from users where email = :email or username = :username or password = crypt(:password, password)")
+    @SqlQuery("select * from users where email = :email or username = :username")
     public User getUser(@Bind("email") final String email,
-                                 @Bind("username") final String username,
-                                 @Bind("password") final String password);
+                        @Bind("username") final String username);
 
     @SqlUpdate("insert into users values(:id, :username, :email, crypt(:password, gen_salt('bf',8)))")
     public int createUser(@BindBean User user);

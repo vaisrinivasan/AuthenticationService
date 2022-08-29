@@ -1,9 +1,7 @@
 package com.org.authservice.service;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jws;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import com.org.authservice.exceptions.InvalidInputException;
+import io.jsonwebtoken.*;
 
 import javax.crypto.spec.SecretKeySpec;
 import java.security.Key;
@@ -21,25 +19,35 @@ public class TokenService {
     }
 
     public String generateToken(String id) {
-        final Key hmacKey = new SecretKeySpec(Base64.getDecoder().decode(tokenSecret),
-                SignatureAlgorithm.HS256.getJcaName());
-        final Instant now = Instant.now();
-        final String jwtToken = Jwts.builder()
-                .setId(id)
-                .setIssuedAt(Date.from(now))
-                .setExpiration(Date.from(now.plus(10l, ChronoUnit.MINUTES)))
-                .signWith(hmacKey)
-                .compact();
-        return jwtToken;
+        try {
+            final Key hmacKey = new SecretKeySpec(Base64.getDecoder().decode(tokenSecret),
+                    SignatureAlgorithm.HS256.getJcaName());
+            final Instant now = Instant.now();
+            final String jwtToken = Jwts.builder()
+                    .setId(id)
+                    .setIssuedAt(Date.from(now))
+                    .setExpiration(Date.from(now.plus(10l, ChronoUnit.MINUTES)))
+                    .signWith(hmacKey)
+                    .compact();
+            return jwtToken;
+        }
+        catch(JwtException jwtException) {
+            throw new InvalidInputException(jwtException);
+        }
     }
 
     public Jws<Claims> parseToken(String token) {
-        final Key hmacKey = new SecretKeySpec(Base64.getDecoder().decode(tokenSecret),
-                SignatureAlgorithm.HS256.getJcaName());
-        Jws<Claims> jwt = Jwts.parserBuilder()
-                .setSigningKey(hmacKey)
-                .build()
-                .parseClaimsJws(token);
-        return jwt;
+        try {
+            final Key hmacKey = new SecretKeySpec(Base64.getDecoder().decode(tokenSecret),
+                    SignatureAlgorithm.HS256.getJcaName());
+            Jws<Claims> jwt = Jwts.parserBuilder()
+                    .setSigningKey(hmacKey)
+                    .build()
+                    .parseClaimsJws(token);
+            return jwt;
+        }
+        catch(JwtException jwtException) {
+            throw new InvalidInputException(jwtException);
+        }
     }
 }
