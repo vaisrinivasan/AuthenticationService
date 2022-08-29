@@ -3,7 +3,6 @@ package com.org.authservice.service;
 import com.org.authservice.dao.UserDao;
 import com.org.authservice.exceptions.DependencyException;
 import com.org.authservice.exceptions.InvalidInputException;
-import com.org.authservice.exceptions.UserAlreadyExistsException;
 import com.org.authservice.models.User;
 import lombok.AllArgsConstructor;
 import org.skife.jdbi.v2.exceptions.DBIException;
