@@ -37,10 +37,12 @@ public class AuthServiceResource {
                                                             @QueryParam("username") @NotEmpty @NotNull String username,
                                                             @QueryParam("password") @NotEmpty @NotNull String password) {
         try {
+            log.info("Register call with username : " + username +" and email " + email);
             if (userService.isExistingUser(email, username))
                 throw new WebApplicationException("User already exists", HttpStatus.BAD_REQUEST_400);
             String userId = userService.createUser(email, username, password);
             String token = tokenService.generateToken(userId);
+            log.info("Register successful for username : " + username + " and email " + email);
             return new Representation<String>(HttpStatus.OK_200, token);
         }
         catch(DependencyException dependencyException) {
@@ -63,10 +65,12 @@ public class AuthServiceResource {
     public Representation<String> login(@QueryParam("username") @NotEmpty @NotNull String username,
                                                      @QueryParam("password") @NotEmpty @NotNull String password) {
         try {
+            log.info("Login call with username : " + username);
             Optional<User> user = userService.getRegisteredUser(username, password);
             if (!user.isPresent())
                 throw new WebApplicationException("Username or password invalid", HttpStatus.BAD_REQUEST_400);
             String token = tokenService.generateToken(user.get().getId());
+            log.info("Login successful with username : " + username);
             return new Representation<String>(HttpStatus.OK_200, token);
         }
         catch(DependencyException dependencyException) {
@@ -89,9 +93,11 @@ public class AuthServiceResource {
     public Representation<User> lookup(@QueryParam("token") @NotEmpty @NotNull String token) {
         try {
             Jws<Claims> jwt = tokenService.parseToken(token);
+            log.info("Lookup call with user id : " + jwt.getBody().getId());
             Optional<User> user = userService.getUserById(jwt.getBody().getId());
             if (!user.isPresent())
                 throw new WebApplicationException("User not found for the token", HttpStatus.BAD_REQUEST_400);
+            log.info("Lookup call successful with user id : " + jwt.getBody().getId());
             return new Representation<User>(HttpStatus.OK_200, user.get());
         }
         catch(DependencyException dependencyException) {
@@ -114,9 +120,12 @@ public class AuthServiceResource {
     public Representation<String> deleteUser(@QueryParam("token") @NotEmpty @NotNull String token) {
         try {
             Jws<Claims> jwt = tokenService.parseToken(token);
+            log.info("Delete call with user id : " + jwt.getBody().getId());
             int status = userService.deleteUserById(jwt.getBody().getId());
-            if (status == 1)
+            if (status == 1) {
+                log.info("Delete call successful with user id : " + jwt.getBody().getId());
                 return new Representation<String>(HttpStatus.OK_200, "Deletion successful");
+            }
             else
                 throw new WebApplicationException(Response.Status.INTERNAL_SERVER_ERROR);
         }

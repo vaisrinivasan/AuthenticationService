@@ -1,6 +1,7 @@
 package com.org.authservice;
 
 import com.org.authservice.dao.UserDao;
+import com.org.authservice.health.AuthServiceAppHealthCheck;
 import com.org.authservice.resources.AuthServiceResource;
 import com.org.authservice.service.TokenService;
 import com.org.authservice.service.UserService;
@@ -37,9 +38,8 @@ public class AuthServiceApplication extends Application<AuthServiceConfiguration
         final UserService userService = new UserService(userDao);
         final TokenService tokenService = new TokenService(configuration.getJwtTokenSecret());
         final AuthServiceResource resource = new AuthServiceResource(userService, tokenService);
-        //Todo - Add a health check
-        //final TemplateHealthCheck healthCheck =new TemplateHealthCheck(configuration.getTemplate());
-        //environment.healthChecks().register("template", healthCheck);
+        final AuthServiceAppHealthCheck healthCheck = new AuthServiceAppHealthCheck(userService);
+        environment.healthChecks().register("Authentication Service", healthCheck);
         environment.jersey().register(resource);
     }
 }

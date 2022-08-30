@@ -6,6 +6,8 @@ import com.org.authservice.exceptions.InvalidInputException;
 import com.org.authservice.models.User;
 import lombok.AllArgsConstructor;
 import org.skife.jdbi.v2.exceptions.DBIException;
+import org.skife.jdbi.v2.exceptions.UnableToExecuteStatementException;
+import org.skife.jdbi.v2.exceptions.UnableToObtainConnectionException;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -65,5 +67,18 @@ public class UserService {
         catch(DBIException e) {
             throw new DependencyException(e);
         }
+    }
+
+    public String performHealthCheck() {
+        try {
+            userDao.getUserById(UUID.randomUUID().toString());
+        } catch (UnableToObtainConnectionException ex) {
+            return ex.getMessage();
+        } catch (UnableToExecuteStatementException ex) {
+            return ex.getMessage();
+        } catch (Exception ex) {
+            return ex.getMessage();
+        }
+        return null;
     }
 }
