@@ -1,7 +1,5 @@
 package com.org.authservice.resources;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.org.authservice.dao.UserDao;
 import com.org.authservice.models.Representation;
 import com.org.authservice.models.User;
@@ -41,7 +39,6 @@ public class AuthServiceResourceTest {
             .addResource(new AuthServiceResource(userService, tokenService))
             .build();
     private User user;
-    private static final Gson gson = new GsonBuilder().create();
 
     @BeforeEach
     public void setup() {

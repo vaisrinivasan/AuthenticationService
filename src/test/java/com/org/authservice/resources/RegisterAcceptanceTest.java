@@ -28,7 +28,7 @@ public class RegisterAcceptanceTest {
         Client client = EXT.client();
         User user = createUser();
         Entity<?> entity = Entity.entity(user, MediaType.APPLICATION_JSON_TYPE);
-        Response response = client.target("/auth-service/register")
+        Response response = client.target("http://localhost:8080/auth-service/register")
                 .queryParam("email", "abc@gmail.com")
                 .queryParam("username", "abc")
                 .queryParam("password", "abc")
