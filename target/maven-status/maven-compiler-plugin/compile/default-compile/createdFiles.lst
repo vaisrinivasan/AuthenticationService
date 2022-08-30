@@ -1,3 +1,4 @@
+com\org\authservice\AuthServiceApplication$1.class
 com\org\authservice\AuthServiceApplication.class
 com\org\authservice\models\User.class
 com\org\authservice\service\UserService.class

@@ -1,4 +1,6 @@
 jwtTokenSecret: asdfSFS34wfsdfsdfSDSD32dfsddDDerQSNCK34SOWEK5354fdgdf4
+swagger:
+  resourcePackage: com.org.authservice.resources
 database:
   # the name of your JDBC driver
   driverClass: org.postgresql.Driver

@@ -8,10 +8,11 @@ import com.org.authservice.service.UserService;
 import io.dropwizard.Application;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
+import io.federecio.dropwizard.swagger.SwaggerBundle;
+import io.federecio.dropwizard.swagger.SwaggerBundleConfiguration;
 import org.skife.jdbi.v2.DBI;
 
 import javax.sql.DataSource;
-import java.io.UnsupportedEncodingException;
 
 public class AuthServiceApplication extends Application<AuthServiceConfiguration> {
 
@@ -26,11 +27,16 @@ public class AuthServiceApplication extends Application<AuthServiceConfiguration
 
     @Override
     public void initialize(Bootstrap<AuthServiceConfiguration> bootstrap) {
-        // nothing to do yet
+        bootstrap.addBundle(new SwaggerBundle<AuthServiceConfiguration>() {
+            @Override
+            protected SwaggerBundleConfiguration getSwaggerBundleConfiguration(AuthServiceConfiguration configuration) {
+                return configuration.swaggerBundleConfiguration;
+            }
+        });
     }
 
     @Override
-    public void run(AuthServiceConfiguration configuration, Environment environment) throws UnsupportedEncodingException {
+    public void run(AuthServiceConfiguration configuration, Environment environment) {
         final DataSource dataSource =
                 configuration.getDataSourceFactory().build(environment.metrics(), "postgresql");
         final DBI dbi = new DBI(dataSource);

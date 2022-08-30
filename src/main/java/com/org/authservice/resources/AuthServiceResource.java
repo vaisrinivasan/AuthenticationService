@@ -8,6 +8,10 @@ import com.org.authservice.service.TokenService;
 import com.org.authservice.service.UserService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.jetty.http.HttpStatus;
 
@@ -20,6 +24,7 @@ import java.util.Optional;
 
 @Slf4j
 @Path("/auth-service")
+@Api(value = "/auth-service")
 @Produces(MediaType.APPLICATION_JSON)
 public class AuthServiceResource {
     private final UserService userService;
