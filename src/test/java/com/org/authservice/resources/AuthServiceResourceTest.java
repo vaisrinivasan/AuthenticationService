@@ -147,19 +147,6 @@ public class AuthServiceResourceTest {
         Assertions.assertEquals("Deletion successful", output.getData());
     }
 
-    @Test
-    public void testDeleteUnSuccessful() {
-        when(userDao.deleteUserById(any())).thenReturn(0);
-        String token = tokenService.generateToken(UUID.randomUUID().toString());
-        Response response = EXT.target("/auth-service/delete")
-                .queryParam("token", token)
-                .request()
-                .delete();
-        String output = response.readEntity(String.class);
-        Assertions.assertTrue(output.contains("400"));
-        Assertions.assertTrue(output.contains("User Id invalid or user not found"));
-    }
-
     private User createUser() {
         String new_id = UUID.randomUUID().toString();
         String new_username = "new";
