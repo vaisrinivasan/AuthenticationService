@@ -12,13 +12,12 @@ public class AuthServiceAppHealthCheck extends HealthCheck {
     private final UserService userService;
 
     @Override
-    public Result check() throws Exception {
-        String dbHealthStatus = userService.performHealthCheck();
-
-        if (dbHealthStatus == null) {
+    public Result check() {
+        try {
+            userService.performHealthCheck();
             return Result.healthy(HEALTHY);
-        } else {
-            return Result.unhealthy(UNHEALTHY + MESSAGE_PLACEHOLDER, dbHealthStatus);
+        } catch (Exception e) {
+            return Result.unhealthy(UNHEALTHY + MESSAGE_PLACEHOLDER, e.getMessage());
         }
     }
 }

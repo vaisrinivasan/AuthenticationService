@@ -13,10 +13,10 @@ public class UserMapper implements ResultSetMapper<User> {
     private static final String USERNAME = "username";
     private static final String PASSWORD = "password";
 
-    public User map(int i, ResultSet resultSet, StatementContext statementContext) throws SQLException {
+    public User map(final int i, final ResultSet resultSet, final StatementContext statementContext) throws SQLException {
         return new User(resultSet.getString(ID),
-                        resultSet.getString(EMAIL),
-                        resultSet.getString(USERNAME),
-                        resultSet.getString(PASSWORD));
+                resultSet.getString(EMAIL),
+                resultSet.getString(USERNAME),
+                resultSet.getString(PASSWORD));
     }
 }

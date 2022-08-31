@@ -8,7 +8,6 @@ import io.federecio.dropwizard.swagger.SwaggerBundleConfiguration;
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import java.io.UnsupportedEncodingException;
 
 public class AuthServiceConfiguration extends Configuration {
 
@@ -23,7 +22,7 @@ public class AuthServiceConfiguration extends Configuration {
     public SwaggerBundleConfiguration swaggerBundleConfiguration;
 
     @JsonProperty("database")
-    public void setDataSourceFactory(DataSourceFactory factory) {
+    public void setDataSourceFactory(final DataSourceFactory factory) {
         this.dataSourceFactory = factory;
     }
 
@@ -32,7 +31,7 @@ public class AuthServiceConfiguration extends Configuration {
         return dataSourceFactory;
     }
 
-    public String getJwtTokenSecret()  {
+    public String getJwtTokenSecret() {
         return jwtTokenSecret;
     }
 }

@@ -14,11 +14,11 @@ public class TokenService {
 
     private final String tokenSecret;
 
-    public TokenService(String tokenSecret) {
+    public TokenService(final String tokenSecret) {
         this.tokenSecret = tokenSecret;
     }
 
-    public String generateToken(String id) {
+    public String generateToken(final String id) {
         try {
             final Key hmacKey = new SecretKeySpec(Base64.getDecoder().decode(tokenSecret),
                     SignatureAlgorithm.HS256.getJcaName());
@@ -30,13 +30,12 @@ public class TokenService {
                     .signWith(hmacKey)
                     .compact();
             return jwtToken;
-        }
-        catch(JwtException jwtException) {
+        } catch (JwtException jwtException) {
             throw new InvalidInputException(jwtException);
         }
     }
 
-    public Jws<Claims> parseToken(String token) {
+    public Jws<Claims> parseToken(final String token) {
         try {
             final Key hmacKey = new SecretKeySpec(Base64.getDecoder().decode(tokenSecret),
                     SignatureAlgorithm.HS256.getJcaName());
@@ -45,8 +44,7 @@ public class TokenService {
                     .build()
                     .parseClaimsJws(token);
             return jwt;
-        }
-        catch(JwtException jwtException) {
+        } catch (JwtException jwtException) {
             throw new InvalidInputException(jwtException);
         }
     }

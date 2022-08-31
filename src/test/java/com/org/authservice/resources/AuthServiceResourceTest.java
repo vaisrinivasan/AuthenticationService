@@ -17,7 +17,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-
 import java.util.UUID;
 
 import static org.mockito.Mockito.*;
@@ -42,7 +41,7 @@ public class AuthServiceResourceTest {
 
     @BeforeEach
     public void setup() {
-        user = new User(ID,EMAIL, USERNAME, PASSWORD);
+        user = new User(ID, EMAIL, USERNAME, PASSWORD);
     }
 
     @AfterEach
@@ -144,7 +143,7 @@ public class AuthServiceResourceTest {
                 .request()
                 .delete();
         Representation<String> output = response.readEntity(Representation.class);
-        Assertions.assertEquals(200,output.getCode());
+        Assertions.assertEquals(200, output.getCode());
         Assertions.assertEquals("Deletion successful", output.getData());
     }
 

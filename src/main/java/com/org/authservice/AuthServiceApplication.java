@@ -16,7 +16,7 @@ import javax.sql.DataSource;
 
 public class AuthServiceApplication extends Application<AuthServiceConfiguration> {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(final String[] args) throws Exception {
         new AuthServiceApplication().run(args);
     }
 
@@ -26,17 +26,17 @@ public class AuthServiceApplication extends Application<AuthServiceConfiguration
     }
 
     @Override
-    public void initialize(Bootstrap<AuthServiceConfiguration> bootstrap) {
+    public void initialize(final Bootstrap<AuthServiceConfiguration> bootstrap) {
         bootstrap.addBundle(new SwaggerBundle<AuthServiceConfiguration>() {
             @Override
-            protected SwaggerBundleConfiguration getSwaggerBundleConfiguration(AuthServiceConfiguration configuration) {
+            protected SwaggerBundleConfiguration getSwaggerBundleConfiguration(final AuthServiceConfiguration configuration) {
                 return configuration.swaggerBundleConfiguration;
             }
         });
     }
 
     @Override
-    public void run(AuthServiceConfiguration configuration, Environment environment) {
+    public void run(final AuthServiceConfiguration configuration, final Environment environment) {
         final DataSource dataSource =
                 configuration.getDataSourceFactory().build(environment.metrics(), "postgresql");
         final DBI dbi = new DBI(dataSource);

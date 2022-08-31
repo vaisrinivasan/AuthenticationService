@@ -11,7 +11,7 @@ public class Representation<T> {
         // Jackson deserialization
     }
 
-    public Representation(long code, T data) {
+    public Representation(final long code, final T data) {
         this.code = code;
         this.data = data;
     }

@@ -1,11 +1,12 @@
 package com.org.authservice.exceptions;
 
-public class DependencyException extends RuntimeException{
+public class DependencyException extends RuntimeException {
 
-    public DependencyException(Throwable throwable) {
+    public DependencyException(final Throwable throwable) {
         super(throwable);
     }
-    public DependencyException(String msg) {
+
+    public DependencyException(final String msg) {
         super(msg);
     }
 }

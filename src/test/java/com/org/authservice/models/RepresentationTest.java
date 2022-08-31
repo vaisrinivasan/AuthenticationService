@@ -26,8 +26,8 @@ public class RepresentationTest {
     @Test
     public void deserializesFromJSON() throws Exception {
         final User user = new User(TEST_USER_ID, TEST_USER_EMAIL, TEST_USER_USERNAME, TEST_USER_PASSWORD);
-        Assert.assertEquals(MAPPER.readValue(fixture(USER_JSON),User.class).getId(), user.getId());
-        Assert.assertEquals(MAPPER.readValue(fixture(USER_JSON),User.class).getEmail(), user.getEmail());
-        Assert.assertEquals(MAPPER.readValue(fixture(USER_JSON),User.class).getUsername(), user.getUsername());
+        Assert.assertEquals(MAPPER.readValue(fixture(USER_JSON), User.class).getId(), user.getId());
+        Assert.assertEquals(MAPPER.readValue(fixture(USER_JSON), User.class).getEmail(), user.getEmail());
+        Assert.assertEquals(MAPPER.readValue(fixture(USER_JSON), User.class).getUsername(), user.getUsername());
     }
 }
